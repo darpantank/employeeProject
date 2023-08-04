@@ -1,0 +1,30 @@
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="001" author="DarpanTank">
+		<addColumn tableName="laptop">
+			<column name="laptop_ram" type="INT" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="002" author="DarpanTank">
+		<dropColumn tableName="laptop" columnName="laptop_ram" />
+	</changeSet>
+
+	<changeSet id="003" author="DarpanTank">
+		<createTable tableName="project">
+			<column name="id" type="int">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="dept" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="employeeCount" type="int">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+</databaseChangeLog>
