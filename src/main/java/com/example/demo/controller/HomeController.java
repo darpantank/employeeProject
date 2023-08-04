@@ -59,7 +59,6 @@ public class HomeController implements GlobalVariables{
 	}
 	@PostMapping("/upload-img")
 	public void uploadPhotos(){
-//		System.out.println("Hello "+file.getOriginalFilename());
 //		return new ResponseEntity<String>("Hello",HttpStatus.BANDWIDTH_LIMIT_EXCEEDED);
 		service.getDepartmentById(3);
 		
