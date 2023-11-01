@@ -1,36 +1,34 @@
 package com.example.demo.service.impl;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 import com.example.demo.dao.DeptDao;
 import com.example.demo.dao.DesignationDao;
 import com.example.demo.dao.EmployeeDao;
 import com.example.demo.dao.RoleDao;
 import com.example.demo.dto.EmployeeSearchDto;
+import com.example.demo.dto.UpdateEmployeeRequestDto;
 import com.example.demo.exception.EmployeeNotPresentException;
 import com.example.demo.global_variable.GlobalVariables;
 import com.example.demo.model.Department;
 import com.example.demo.model.Designation;
 import com.example.demo.model.Employee;
+import com.example.demo.model.Laptop;
 import com.example.demo.response.ApiResponse;
 import com.example.demo.service.EmployeeService;
 @Service
-public class EmployeeServiceImpl implements EmployeeService,GlobalVariables {
+public class EmployeeServiceImpl extends EmployeeService.a.b.c.e.f implements EmployeeService,GlobalVariables {
 	@PersistenceContext
     private EntityManager entityManager;
 	@Autowired
@@ -67,9 +65,13 @@ public class EmployeeServiceImpl implements EmployeeService,GlobalVariables {
 		this.employeeDao.deleteById(employeeId);
 	}
 	@Override
-	public Employee updateEmployeeData(long employeeId,Employee employee) {
+	public Employee updateEmployeeData(long employeeId,UpdateEmployeeRequestDto employee) {
 		Employee employeeFromDb = employeeDao.findById(employeeId).orElseThrow(() -> new EmployeeNotPresentException());
-		return employeeDao.save(employee);
+		employeeFromDb.setEmployeeName(employee.getEmployeeName());
+		employeeFromDb.setEmail(employee.getEmail());
+		employeeFromDb.setPassword(employee.getPassword());
+		employeeFromDb.setLaptop(new Laptop(employee.getLaptopId()));
+		return employeeDao.save(employeeFromDb);
 	}
 	@Override
 	public List<Department> getEmployeesByDept() {

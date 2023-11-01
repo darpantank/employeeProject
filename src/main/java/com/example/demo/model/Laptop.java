@@ -8,19 +8,20 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "laptop")
 @Data
-public class Laptop {
+@NoArgsConstructor
+public class Laptop{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "laptop_id")
-	private int laptopId;
+	private long laptopId;
 	@Column(name = "laptop_model")
 	private String laptopModel;
 	@Column(name = "laptop_brand")
@@ -28,4 +29,8 @@ public class Laptop {
 	@JsonIgnore
 	@OneToOne(mappedBy = "laptop")
 	private Employee employee;
+	
+	public Laptop(long laptopId){
+		this.laptopId=laptopId;
+	}
 }
