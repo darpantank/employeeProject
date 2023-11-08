@@ -1,11 +1,13 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dto.EmployeeSearchDto;
+import com.example.demo.dto.LoginIncomingDto;
 import com.example.demo.dto.UpdateEmployeeRequestDto;
 import com.example.demo.model.Department;
 import com.example.demo.model.Designation;
@@ -55,7 +57,8 @@ public interface EmployeeService {
 	void getDepartmentById(int i);
 
 	ApiResponse<List<Employee>> filterEmployees(EmployeeSearchDto dto);
-
+	
+	Optional<Employee> validateEmployee(LoginIncomingDto dto);
 }
 
 

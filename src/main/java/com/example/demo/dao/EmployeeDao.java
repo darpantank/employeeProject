@@ -15,4 +15,5 @@ public interface EmployeeDao extends PagingAndSortingRepository<Employee, Long> 
 	public Page<Employee> findDistinctByLaptopIsNotNullAndEmployeeNameIgnoreCaseContainsOrDesignationsRoleStartingWithIgnoreCaseOrDepartmentNameStartingWithIgnoreCaseOrderByEmployeeName(String keyword,String keyword1,String keyword2, Pageable pageable );
 	public Page<Employee> findDistinctByDesignationsIdInAndDepartmentIdIn(List<Integer> designations,List<Integer> department,Pageable page);
 	public Optional<Employee> findByEmail(String email);
+	public Optional<Employee> findByEmailAndPassword(String username, String password);
 }

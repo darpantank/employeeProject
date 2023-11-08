@@ -18,6 +18,7 @@ import com.example.demo.dao.DesignationDao;
 import com.example.demo.dao.EmployeeDao;
 import com.example.demo.dao.RoleDao;
 import com.example.demo.dto.EmployeeSearchDto;
+import com.example.demo.dto.LoginIncomingDto;
 import com.example.demo.dto.UpdateEmployeeRequestDto;
 import com.example.demo.exception.EmployeeNotPresentException;
 import com.example.demo.global_variable.GlobalVariables;
@@ -26,6 +27,7 @@ import com.example.demo.model.Designation;
 import com.example.demo.model.Employee;
 import com.example.demo.model.Laptop;
 import com.example.demo.response.ApiResponse;
+import com.example.demo.security.UpdatableBCrypt;
 import com.example.demo.service.EmployeeService;
 @Service
 public class EmployeeServiceImpl extends EmployeeService.a.b.c.e.f implements EmployeeService,GlobalVariables {
@@ -39,6 +41,8 @@ public class EmployeeServiceImpl extends EmployeeService.a.b.c.e.f implements Em
 	private RoleDao roleDao;
 	@Autowired
 	private DesignationDao designationDao;
+	
+	private UpdatableBCrypt bCrypt=new UpdatableBCrypt(11);
 	@Override
 	public Employee getEmployeeById(long employeeId) throws EmployeeNotPresentException {
 		Optional<Employee> employee= this.employeeDao.findById(employeeId);
@@ -132,5 +136,16 @@ public class EmployeeServiceImpl extends EmployeeService.a.b.c.e.f implements Em
         response.setTotalPages(list.getTotalPages());
         response.setData(list.getContent());
 		return response;
+	}
+	@Override
+	public Optional<Employee> validateEmployee(LoginIncomingDto dto) {
+		Optional<Employee> emp=employeeDao.findByEmail(dto.getUsername());
+		if(emp.isPresent()) {
+			String passHash =emp.get().getPassword();
+			if(bCrypt.verifyHash(dto.getPassword(), passHash)) {
+				return Optional.of(emp.get());
+						};
+		}
+		return null;
 	}
 }

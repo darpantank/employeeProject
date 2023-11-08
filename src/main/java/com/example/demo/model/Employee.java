@@ -34,6 +34,9 @@ public class Employee {
 	@Column(name = "password")
 	private String password;
 	
+	@Column(name = "secret_key")
+	private String secretKey;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@Column(name= "designation")
 	private List<Designation> designations;
